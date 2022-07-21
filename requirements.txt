@@ -14,3 +14,10 @@ psycopg2
 
 # для загрузки переменных из окружения .env
 python-dotenv
+
+# для валидации данных
+pydantic[email]
+
+
+# хеширование паролей
+passlib[bcrypt]
