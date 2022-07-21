@@ -6,3 +6,11 @@ jinja2
 
 # для статики
 aiofiles
+
+# для БД
+sqlalchemy
+psycopg2
+
+
+# для загрузки переменных из окружения .env
+python-dotenv
