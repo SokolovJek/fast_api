@@ -14,7 +14,3 @@ def start_applications():
 
 
 app = start_applications()
-
-# @app.get("/")
-# def hello_api():
-#     return {"msg": "Hello API"}
