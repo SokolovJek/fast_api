@@ -1,3 +1,8 @@
 fastapi
 uvicorn
+
+# шаблонизатор
 jinja2
+
+# для статики
+aiofiles
