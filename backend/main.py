@@ -3,8 +3,8 @@ from core.config import settings
 from apis.general_pages.route_homepage import general_pages_router
 
 
-def include_router(app):
-    app.include_router(general_pages_router)
+def include_router(my_app):
+    my_app.include_router(general_pages_router)
 
 
 def start_applications():
