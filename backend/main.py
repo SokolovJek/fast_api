@@ -3,7 +3,8 @@ from fastapi.staticfiles import StaticFiles
 
 from core.config import settings
 from apis.general_pages.route_homepage import general_pages_router
-
+from db.session import engine
+from db.base_class import Base
 
 
 def include_router(my_app):
@@ -16,10 +17,15 @@ def configure_static(my_app):
     my_app.mount('/static', StaticFiles(directory='static'), name='static')
 
 
+def create_tables():
+    Base.metadata.create_all(bind=engine)
+
+
 def start_applications():
     my_app = FastAPI(title=settings.PROJECT_NAME, version=settings.PROJECT_VERSION)
     include_router(my_app)
     configure_static(my_app)
+    create_tables()
     return my_app
 
 
