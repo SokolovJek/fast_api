@@ -21,3 +21,36 @@ def create_new_job(job: JobCreate, db: Session, owner_id: int):
     db.commit()
     db.refresh(job_object)
     return job_object
+
+
+def retrieve_job(id_job: int, db: Session):
+    """
+    Получение конкретной вакансии для (end-point '/jobs/get/{id_job}/')
+    """
+    item = db.query(Job).filter(Job.id == id_job).first()
+    return item
+
+
+def list_jobs(db: Session):
+    """
+    Получение всех вакансий для (end-point '/jobs/all/')
+    """
+    jobs = db.query(Job).filter(Job.is_active == True).all()
+    return jobs
+
+
+def update_job_by_id(id_job: int, job: JobCreate, db: Session, owner_id):
+    """
+    Получение всех вакансий для (end-point '/jobs/update/{id_job}')
+    """
+    existing_job = db.query(Job).filter(Job.id == id_job)
+    if not existing_job.first():
+        return 0
+
+    print("job.__dict__=======", job.__dict__)
+    job.__dict__.update(owner_id=owner_id)  # обновить словарь с новым значением ключа owner_id
+    print("job.__dict__=======", job.__dict__)
+
+    existing_job.update(job.__dict__)
+    db.commit()
+    return 1
