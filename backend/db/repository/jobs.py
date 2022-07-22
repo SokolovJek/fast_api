@@ -23,9 +23,17 @@ def create_new_job(job: JobCreate, db: Session, owner_id: int):
     return job_object
 
 
-def retrieve_job(id_job, db):
+def retrieve_job(id_job: int, db: Session):
     """
     Получение конкретной вакансии для (end-point '/jobs/get/{id_job}/')
     """
     item = db.query(Job).filter(Job.id == id_job).first()
     return item
+
+
+def list_jobs(db : Session):
+    """
+    Получение всех вакансий для (end-point '/jobs/all/')
+    """
+    jobs = db.query(Job).filter(Job.is_active == True).all()
+    return jobs

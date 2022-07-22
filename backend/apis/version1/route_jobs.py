@@ -1,11 +1,12 @@
 from fastapi import APIRouter
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status
+from typing import List
 
 from db.session import get_db
 from db.models.jobs import Job
 from schemas.jobs import JobCreate, ShowJob
-from db.repository.jobs import create_new_job, retrieve_job
+from db.repository.jobs import create_new_job, retrieve_job, list_jobs
 
 router = APIRouter()
 
@@ -31,3 +32,12 @@ def read_job(id_job: int, db: Session = Depends(get_db)):
                             detail=f"Работа с идентификатором {id_job} не существует"
                             )
     return job
+
+
+@router.get('/all', response_model=List[ShowJob])
+def read_all_job(db: Session = Depends(get_db)):
+    """
+    создаем маршрут, для чтение всех вакансий
+    """
+    jobs = list_jobs(db=db)
+    return jobs
