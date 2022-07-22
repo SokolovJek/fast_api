@@ -1,6 +1,7 @@
 """
 Поскольку мы используем шаблон репозитория и хотим чтобы логика формы базы данных была полностью отделена от
 логики маршрутов fastapi, создаем функцию «create_new_job» для логики создания job.
+Сдесь хранится БИЗНЕС-ЛОГИКА
 """
 
 from sqlalchemy.orm import Session
@@ -41,7 +42,7 @@ def list_jobs(db: Session):
 
 def update_job_by_id(id_job: int, job: JobCreate, db: Session, owner_id):
     """
-    Получение всех вакансий для (end-point '/jobs/update/{id_job}')
+    Обновление вакансии для (end-point '/jobs/update/{id_job}')
     """
     existing_job = db.query(Job).filter(Job.id == id_job)
     if not existing_job.first():
@@ -52,5 +53,22 @@ def update_job_by_id(id_job: int, job: JobCreate, db: Session, owner_id):
     print("job.__dict__=======", job.__dict__)
 
     existing_job.update(job.__dict__)
+    db.commit()
+    return 1
+
+
+def delete_job_by_id(id_job: int, db: Session, owner_id):
+    """
+    Удаление вакансии для (end-point '/jobs/delete/1')
+    """
+    existing_job = db.query(Job).filter(Job.id == id_job)
+    if not existing_job.first():
+        return 0
+    # Команда session.query(Child).delete() не только удалит соответствующие объектам Child записи из базы данных,
+    # но и обновит состояние этих объектов в сессии.
+    # Естественно, эти дополнительные действия требуют времени и соответственно замедлят процесс удаления.
+    # Если вы точно знаете, что дальше по коду вы не будете больше обращаться к этим объектам,
+    # то вам незачем обновлять их состояние. Для этого и служит synchronize_session=False.
+    existing_job.delete(synchronize_session=False)
     db.commit()
     return 1

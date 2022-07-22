@@ -68,7 +68,7 @@ def test_update_a_job(client):
     assert response.json()["msg"] == "Успешное обновление данных"
 
 
-def test_delete_a_job(client):
+def test_delete_job(client):
     data = {
         "title": "developer",
         "company": "cdek",
@@ -79,5 +79,6 @@ def test_delete_a_job(client):
     }
     client.post("/jobs/create-job/", json.dumps(data))
     msg = client.delete("/jobs/delete/1")
-    response = client.get("/jobs/get/1/")
+    print(msg)
+    response = client.get("/jobs/get/1")
     assert response.status_code == status.HTTP_404_NOT_FOUND
