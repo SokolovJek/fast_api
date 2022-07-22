@@ -6,7 +6,7 @@ from typing import List
 from db.session import get_db
 from db.models.jobs import Job
 from schemas.jobs import JobCreate, ShowJob
-from db.repository.jobs import create_new_job, retrieve_job, list_jobs, update_job_by_id
+from db.repository.jobs import create_new_job, retrieve_job, list_jobs, update_job_by_id, delete_job_by_id
 
 router = APIRouter()
 
@@ -57,15 +57,15 @@ def update_job(id_job: int, job: JobCreate, db: Session = Depends(get_db)):
     return {'msg': 'Успешное обновление данных'}
 
 
-@router.delete('/update/{id_job}')
+@router.delete('/delete/{id_job}')
 def delete_job(id_job: int, db: Session = Depends(get_db)):
     """
-    создаем маршрут, для обновление конкретной вакансии
+    создаем маршрут, для удаление конкретной вакансии
     """
     current_user = 1
-    message = update_job_by_id(id_job=id_job, job=job, db=db, owner_id=current_user)
+    message = delete_job_by_id(id_job=id_job, db=db, owner_id=current_user)
     if not message:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Работа с идентификатором {id_job} не существует"
                             )
-    return {'msg': 'Успешное обновление данных'}
+    return {'msg': 'Успешное удаление данных'}
