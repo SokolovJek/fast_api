@@ -21,3 +21,7 @@ pydantic[email]
 
 # хеширование паролей
 passlib[bcrypt]
+
+# для тестирования
+pytest
+requests

@@ -1,3 +1,7 @@
+"""
+Поскольку мы используем шаблон репозитория и хотим чтобы логика формы базы данных была полностью отделена от
+логики маршрутов fastapi, создаем функцию «create_new_user» для логики создания user.
+"""
 from sqlalchemy.orm import Session
 
 from schemas.users import UserCreate
