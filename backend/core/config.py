@@ -18,5 +18,9 @@ class Settings:
     DATABASE_URL: str = f'postgresql://{POSTGRES_USER}:' \
                         f'{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}'
 
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30
+    ALGORITHM: str = 'HS256'
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+
 
 settings = Settings()
