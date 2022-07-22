@@ -13,7 +13,10 @@ class Base:
     id: Any
     __name__: str
 
-    # s
     @declared_attr
     def __tablename__(cls) -> str:
         return cls.__name__.lower()
+
+
+a = Base()
+print(Base.__tablename__)

@@ -4,3 +4,5 @@ env
 test_db.db
 help.txt
 .idea
+examples.py
+backend/test_db.db
