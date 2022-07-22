@@ -21,3 +21,11 @@ def create_new_job(job: JobCreate, db: Session, owner_id: int):
     db.commit()
     db.refresh(job_object)
     return job_object
+
+
+def retrieve_job(id_job, db):
+    """
+    Получение конкретной вакансии для (end-point '/jobs/get/{id_job}/')
+    """
+    item = db.query(Job).filter(Job.id == id_job).first()
+    return item
