@@ -6,7 +6,7 @@ from typing import List
 from db.session import get_db
 from db.models.jobs import Job
 from schemas.jobs import JobCreate, ShowJob
-from db.repository.jobs import create_new_job, retrieve_job, list_jobs
+from db.repository.jobs import create_new_job, retrieve_job, list_jobs, update_job_by_id
 
 router = APIRouter()
 
@@ -41,3 +41,31 @@ def read_all_job(db: Session = Depends(get_db)):
     """
     jobs = list_jobs(db=db)
     return jobs
+
+
+@router.put('/update/{id_job}')
+def update_job(id_job: int, job: JobCreate, db: Session = Depends(get_db)):
+    """
+    создаем маршрут, для обновление конкретной вакансии
+    """
+    current_user = 1
+    message = update_job_by_id(id_job=id_job, job=job, db=db, owner_id=current_user)
+    if not message:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Работа с идентификатором {id_job} не существует"
+                            )
+    return {'msg': 'Успешное обновление данных'}
+
+
+@router.delete('/update/{id_job}')
+def delete_job(id_job: int, db: Session = Depends(get_db)):
+    """
+    создаем маршрут, для обновление конкретной вакансии
+    """
+    current_user = 1
+    message = update_job_by_id(id_job=id_job, job=job, db=db, owner_id=current_user)
+    if not message:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Работа с идентификатором {id_job} не существует"
+                            )
+    return {'msg': 'Успешное обновление данных'}
